@@ -79,7 +79,8 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        checkWin();
     }
 
     /* This is called by the update function and loops through all of the
@@ -95,6 +96,23 @@ var Engine = (function(global) {
         });
         player.update();
     }
+
+    // This funciton checks for a collision between the player and any of the enemeies
+    function checkCollisions(){
+        allEnemies.forEach(function(enemy) {
+            //console.log(Math.abs(allEnemies[2].x - player.x), Math.abs(allEnemies[2].x - player.x) < 40);
+            if ((Math.abs(enemy.y - player.y) < 10) && (Math.abs(enemy.x - player.x) < 50)){
+                player.reset();
+            }
+        });
+    };
+
+    //This function checks for the win condition
+    function checkWin(){
+        if (player.y < 0){
+            player.reset();
+        }
+    };
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
